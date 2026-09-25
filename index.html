@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LINE公式アカウント 友だち追加ガイド</title>
-<meta name="description" content="LINEのトーク画面で受け取ったQRコードを使って、同じスマホで公式アカウントを友だち追加する方法">
+<title>JAHIC 日本高速情報センター 公式LINE 友だち追加方法</title>
+<meta name="description" content="JAHIC 日本高速情報センター LINE公式アカウントを、LINEのトーク画面からQRコードを読み取って友だち追加する方法">
 <style>
   :root {
     --green: #06c755;
@@ -12,7 +12,6 @@
     --green-pale: #e8f9ef;
     --ink: #1f2a24;
     --sub: #5b6760;
-    --line: #e2e8e4;
     --bg: #f5f7f6;
     --card: #ffffff;
     --warn-bg: #fff8e6;
@@ -29,7 +28,7 @@
     -webkit-text-size-adjust: 100%;
   }
   .wrap {
-    max-width: 640px;
+    max-width: 960px;
     margin: 0 auto;
     padding: 0 16px calc(48px + env(safe-area-inset-bottom, 0px));
   }
@@ -43,47 +42,78 @@
   }
   header .eyebrow {
     display: inline-block;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: .08em;
+    letter-spacing: .06em;
     background: rgba(255,255,255,.2);
     border-radius: 999px;
-    padding: 2px 12px;
+    padding: 2px 14px;
     margin-bottom: 10px;
   }
   header h1 {
     margin: 0;
-    font-size: clamp(22px, 6vw, 28px);
-    line-height: 1.4;
+    font-size: clamp(22px, 5.5vw, 32px);
+    line-height: 1.45;
   }
-  header p { margin: 8px 0 0; font-size: 14px; opacity: .95; }
+  header p { margin: 10px 0 0; font-size: 15px; opacity: .95; }
+
+  /* Layout: QR + steps side by side on wide screens */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: -44px;
+  }
+  @media (min-width: 820px) {
+    .layout { grid-template-columns: 360px 1fr; align-items: start; }
+    .qr-card { position: sticky; top: calc(16px + env(safe-area-inset-top, 0px)); }
+  }
 
   /* QR card */
   .qr-card {
     background: var(--card);
     border-radius: 20px;
     box-shadow: 0 6px 24px rgba(0,0,0,.08);
-    margin-top: -44px;
     padding: 24px 20px;
     text-align: center;
   }
+  .qr-card .account {
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 0 0 4px;
+  }
+  .qr-card .account small {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green-dark);
+    letter-spacing: .06em;
+  }
   .qr-card img {
-    width: min(220px, 70%);
+    width: min(300px, 80%);
     height: auto;
     display: block;
-    margin: 0 auto 12px;
-    -webkit-touch-callout: default;
+    margin: 12px auto;
   }
-  .qr-card .caption { font-size: 13px; color: var(--sub); margin: 0; }
+  .qr-card .caption {
+    font-size: 14px;
+    color: var(--sub);
+    margin: 0;
+  }
+  .qr-card .caption strong { color: var(--ink); }
 
   /* Sections */
-  section { margin-top: 36px; }
+  section + section { margin-top: 36px; }
   h2 {
     font-size: 20px;
     margin: 0 0 14px;
     padding-left: 12px;
     border-left: 5px solid var(--green);
     line-height: 1.4;
+  }
+  @media (min-width: 820px) {
+    .steps-col > section:first-child h2 { margin-top: 60px; }
   }
   .lead { margin: 0 0 16px; color: var(--sub); font-size: 15px; }
 
@@ -98,12 +128,9 @@
     padding: 14px;
     font-size: 14px;
     font-weight: 700;
+    margin-bottom: 18px;
   }
-  .flow span.box {
-    background: #fff;
-    border-radius: 10px;
-    padding: 6px 10px;
-  }
+  .flow span.box { background: #fff; border-radius: 10px; padding: 6px 10px; }
   .flow span.arrow { color: var(--green-dark); }
 
   /* Steps */
@@ -129,6 +156,7 @@
   }
   .steps h3 { margin: 4px 0 6px; font-size: 17px; line-height: 1.5; }
   .steps p { margin: 0; font-size: 15px; }
+  .steps p + p { margin-top: 6px; }
   .steps .hint {
     margin-top: 10px;
     font-size: 13px;
@@ -137,25 +165,6 @@
     border-radius: 10px;
     padding: 8px 12px;
   }
-  .device {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2px 10px;
-    margin-top: 10px;
-    font-size: 14px;
-  }
-  .device dt {
-    font-weight: 700;
-    font-size: 12px;
-    color: var(--green-dark);
-    border: 1px solid var(--green);
-    border-radius: 6px;
-    padding: 0 6px;
-    height: fit-content;
-    margin-top: 3px;
-    white-space: nowrap;
-  }
-  .device dd { margin: 0 0 6px; }
 
   /* Inline icon chips */
   .ico {
@@ -233,147 +242,131 @@
 <body>
 
 <header>
-  <span class="eyebrow">かんたん 3 分</span>
-  <h1>LINEのトーク画面のQRコードで<br>友だち追加する方法</h1>
-  <p>スマホ1台だけで、公式アカウントを友だち追加できます</p>
+  <span class="eyebrow">LINE公式アカウント</span>
+  <h1>JAHIC 日本高速情報センター<br>友だち追加の方法</h1>
+  <p>LINEのトーク画面からQRコードを読み取るだけで、かんたんに友だち追加できます</p>
 </header>
 
 <main class="wrap">
+  <div class="layout">
 
-  <div class="qr-card">
-    <img src="image/IMG_1856.png" alt="LINE公式アカウントの友だち追加用QRコード" width="540" height="540">
-    <p class="caption">トーク画面で届いたのはこのQRコードです</p>
+    <aside class="qr-card" aria-label="友だち追加用QRコード">
+      <p class="account"><small>LINE公式アカウント</small>JAHIC 日本高速情報センター</p>
+      <img src="image/IMG_1856.png" alt="JAHIC 日本高速情報センター LINE公式アカウントの友だち追加用QRコード" width="540" height="540">
+      <p class="caption">このQRコードを<strong>スマホのLINE</strong>で読み取ってください</p>
+    </aside>
+
+    <div class="steps-col">
+      <section>
+        <h2>友だち追加の手順</h2>
+        <div class="flow" aria-label="手順の流れ">
+          <span class="box">① トーク画面</span><span class="arrow">▶</span>
+          <span class="box">② QRコードリーダー</span><span class="arrow">▶</span>
+          <span class="box">③ カメラで読み取り</span><span class="arrow">▶</span>
+          <span class="box">④ 追加</span>
+        </div>
+
+        <ol class="steps">
+          <li>
+            <div class="num">1</div>
+            <div>
+              <h3>スマホでLINEを開き「トーク」タブを表示</h3>
+              <p>LINEアプリを起動し、画面下の<strong class="k">「トーク」</strong>をタップしてトーク画面（トーク一覧）を開きます。</p>
+            </div>
+          </li>
+
+          <li>
+            <div class="num">2</div>
+            <div>
+              <h3>QRコードアイコンをタップ</h3>
+              <p>
+                トーク画面上部の検索欄の右にあるQRコードアイコン
+                <span class="ico" aria-label="QRコードアイコン"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="4.5" height="4.5" rx="1"/><rect x="9.5" y="2" width="4.5" height="4.5" rx="1"/><rect x="2" y="9.5" width="4.5" height="4.5" rx="1"/><path d="M9.5 9.5h1.8v1.8M14 9.5v4.5h-4.5" stroke-linecap="round"/></svg></span>
+                をタップすると、QRコードリーダー（カメラ）が起動します。
+              </p>
+              <p class="hint">カメラへのアクセスを求められたら「許可」を選んでください。</p>
+            </div>
+          </li>
+
+          <li>
+            <div class="num">3</div>
+            <div>
+              <h3>このページのQRコードにカメラを向ける</h3>
+              <p>画面に表示されている枠の中にQRコード全体が収まるよう、スマホのカメラをQRコードに向けます。自動で読み取られます。</p>
+              <p class="hint">読み取りにくいときは、少し離したり近づけたりして、ピントが合う距離を探してください。</p>
+            </div>
+          </li>
+
+          <li>
+            <div class="num">4</div>
+            <div>
+              <h3>「追加」をタップ</h3>
+              <p>
+                <strong>JAHIC 日本高速情報センター</strong>のプロフィールが表示されたら
+                <span class="btn-mock">追加</span>
+                をタップします。
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div class="num">5</div>
+            <div>
+              <h3>友だち追加の完了</h3>
+              <p>トーク一覧に「JAHIC 日本高速情報センター」が表示されれば完了です。今後はこちらからのお知らせをLINEで受け取れます。</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="notice" role="note">
+          <p>⚠️ LINEのバージョンや機種によって、アイコンの位置や名称が少し異なる場合があります。</p>
+          <p>うまくいかないときは、LINEアプリを最新版にアップデートしてからお試しください。</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>よくある質問</h2>
+
+        <details>
+          <summary>トーク画面にQRコードアイコンが見つかりません</summary>
+          <div class="a">
+            <p>「ホーム」タブ右上の友だち追加アイコン →<strong>「QRコード」</strong>をタップしても、同じQRコードリーダーが起動します。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>このページをスマホで見ていて、カメラで読み取れません</summary>
+          <div class="a">
+            <p>同じスマホの画面に表示されたQRコードは、そのスマホのカメラでは読み取れません。次の方法をお試しください。</p>
+            <p>① QRコードの画像を長押しして保存する（またはスクリーンショットを撮る）<br>
+               ② 手順2でQRコードリーダーを開き、画面右下の画像アイコンをタップ<br>
+               ③ 保存したQRコードの画像を選択 → 「追加」をタップ</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>カメラを向けても読み取れません</summary>
+          <div class="a">
+            <p>QRコード全体が枠に収まっているか、画面が暗すぎたり反射していないかを確認してください。パソコンの画面の場合は、画面の明るさを上げると読み取りやすくなります。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>カメラが起動しません</summary>
+          <div class="a">
+            <p>LINEにカメラの使用が許可されていない可能性があります。</p>
+            <p><strong>iPhone：</strong>「設定」→「LINE」→「カメラ」をオン<br>
+               <strong>Android：</strong>「設定」→「アプリ」→「LINE」→「権限」→「カメラ」を許可</p>
+          </div>
+        </details>
+      </section>
+    </div>
+
   </div>
-
-  <section>
-    <h2>はじめに</h2>
-    <p class="lead">
-      自分のスマホに表示されているQRコードは、同じスマホのカメラでは読み取れません。
-      そこで、<strong>QRコードの画像をいったんスマホに保存し、LINEの「QRコードリーダー」で画像から読み込み</strong>ます。
-    </p>
-    <div class="flow" aria-label="手順の流れ">
-      <span class="box">① 画像を保存</span><span class="arrow">▶</span>
-      <span class="box">② QRリーダーを開く</span><span class="arrow">▶</span>
-      <span class="box">③ 画像を読み込む</span><span class="arrow">▶</span>
-      <span class="box">④ 追加</span>
-    </div>
-  </section>
-
-  <section>
-    <h2>友だち追加の手順</h2>
-    <ol class="steps">
-
-      <li>
-        <div class="num">1</div>
-        <div>
-          <h3>トーク画面でQRコードの画像をタップ</h3>
-          <p>QRコードが送られてきたトークを開き、QRコードの画像をタップして全画面で表示します。</p>
-        </div>
-      </li>
-
-      <li>
-        <div class="num">2</div>
-        <div>
-          <h3>画像をスマホに保存する</h3>
-          <p>
-            画面下の保存アイコン
-            <span class="ico" aria-label="保存アイコン"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 6.8 8 10.3l3.5-3.5M3 13.5h10"/></svg></span>
-            をタップします。
-          </p>
-          <dl class="device">
-            <dt>iPhone</dt><dd>「写真」アプリに保存されます</dd>
-            <dt>Android</dt><dd>「ギャラリー」「フォト」などに保存されます</dd>
-          </dl>
-          <p class="hint">保存アイコンが見つからない・保存できないときは、QRコードが映った状態で<strong>スクリーンショット</strong>を撮ってもOKです。</p>
-        </div>
-      </li>
-
-      <li>
-        <div class="num">3</div>
-        <div>
-          <h3>LINEの「QRコードリーダー」を開く</h3>
-          <p>
-            LINEの<strong class="k">「ホーム」</strong>タブを開き、画面上部の検索欄の右にある
-            QRコードアイコン
-            <span class="ico" aria-label="QRコードアイコン"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="4.5" height="4.5" rx="1"/><rect x="9.5" y="2" width="4.5" height="4.5" rx="1"/><rect x="2" y="9.5" width="4.5" height="4.5" rx="1"/><path d="M9.5 9.5h1.8v1.8M14 9.5v4.5h-4.5" stroke-linecap="round"/></svg></span>
-            をタップします。
-          </p>
-          <p class="hint">別の開き方：「ホーム」→ 右上の友だち追加アイコン → <strong>「QRコード」</strong>でも同じ画面が開きます。</p>
-        </div>
-      </li>
-
-      <li>
-        <div class="num">4</div>
-        <div>
-          <h3>画像アイコンから保存したQRコードを選ぶ</h3>
-          <p>
-            カメラ画面が開いたら、画面右下の画像（アルバム）アイコン
-            <span class="ico" aria-label="画像アイコン"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="2" y="2.5" width="12" height="11" rx="1.5"/><circle cx="5.8" cy="6" r="1.2"/><path d="m2.5 12 3.8-3.6 2.4 2.2 2-1.8 2.8 2.7"/></svg></span>
-            をタップし、手順2で保存したQRコードの画像を選択します。
-          </p>
-          <p class="hint">写真へのアクセスを求められたら「許可」を選んでください。</p>
-        </div>
-      </li>
-
-      <li>
-        <div class="num">5</div>
-        <div>
-          <h3>「追加」をタップして完了</h3>
-          <p>
-            公式アカウントのプロフィールが表示されたら
-            <span class="btn-mock">追加</span>
-            をタップします。これで友だち追加は完了です🎉
-          </p>
-          <p class="hint">追加後はトーク一覧に公式アカウントが表示され、メッセージを受け取れるようになります。</p>
-        </div>
-      </li>
-
-    </ol>
-
-    <div class="notice" role="note">
-      <p>⚠️ LINEのバージョンや機種によって、アイコンの位置や名称が少し異なる場合があります。</p>
-      <p>うまくいかないときは、LINEアプリを最新版にアップデートしてからお試しください。</p>
-    </div>
-  </section>
-
-  <section>
-    <h2>よくある質問</h2>
-
-    <details>
-      <summary>パソコンや別のスマホにQRコードが表示されている場合は？</summary>
-      <div class="a">
-        <p>その場合は画像を保存する必要はありません。手順3の「QRコードリーダー」を開き、スマホのカメラを画面のQRコードに向けるだけで読み取れます。</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>「QRコードを読み取れません」と表示されます</summary>
-      <div class="a">
-        <p>QRコード全体が画像に収まっているか確認してください。スクリーンショットの場合は、QRコードが画面いっぱいに大きく表示された状態で撮り直すと読み取りやすくなります。</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>保存した画像が一覧に出てきません</summary>
-      <div class="a">
-        <p>LINEに写真へのアクセスが許可されていない可能性があります。</p>
-        <p><strong>iPhone：</strong>「設定」→「LINE」→「写真」→「すべての写真」<br>
-           <strong>Android：</strong>「設定」→「アプリ」→「LINE」→「権限」→「写真と動画」を許可</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>保存したQRコードの画像は消してもいいですか？</summary>
-      <div class="a">
-        <p>はい。友だち追加が完了したら、保存した画像やスクリーンショットは削除して問題ありません。</p>
-      </div>
-    </details>
-  </section>
 
   <footer>
     <p>LINEは LINEヤフー株式会社の商標または登録商標です。</p>
   </footer>
-
 </main>
 </body>
 </html>
